@@ -73,10 +73,22 @@ droid -cf droid_config.toml --platform microsoft_xdr \
 
 ## MSSP
 
-Currently the [MSSP mode](./platforms/microsoft_sentinel.md#mssp-mode) is available for Microsoft Sentinel.
+Currently the [MSSP mode](./platforms/microsoft_sentinel.md#mssp-mode) is available for Microsoft Sentinel and Microsoft XDR.
 
 ```bash
 droid -cf droid_config.toml --platform microsoft_sentinel --rules sigma/sigmahq-core/windows/process_creation/proc_creation_win_wmic_susp_process_creation.yml --search --mssp
+```
+
+When using the MSSP mode, you have the ability to apply specific filters for designated customers. By adding `customer_name` and `customers_filters_directory` in the TOML configuration in  `platforms.<platform>.export_list_mssp.CustomerName`, `droid` will add the default filters directory from `base` AND the Sigma filters in `customer_filters_directory`.
+
+Example:
+
+```
+            [platforms.microsoft_xdr.export_list_mssp.Zoidberg]
+
+            tenant_id = "122d2a69-c233-4824-a009-a431d839d799"
+            customer_name = "Zoidberg"
+            customer_filters_directory = "filters/zoidberg/"
 ```
 
 ## Test using Atomic Red Team
